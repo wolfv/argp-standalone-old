@@ -28,7 +28,13 @@
 
 #include <stdio.h>
 #include <string.h>
+#if HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
+#ifdef _WIN32
+typedef ptrdiff_t ssize_t;
+#endif
 
 #if _LIBC || (defined (HAVE_FLOCKFILE) && defined(HAVE_PUTC_UNLOCKED) \
      && defined (HAVE_FPUTS_UNLOCKED) && defined (HAVE_FWRITE_UNLOCKED) )
@@ -191,8 +197,8 @@ extern void _argp_fmtstream_update (argp_fmtstream_t __fs);
 extern void __argp_fmtstream_update (argp_fmtstream_t __fs);
 extern int _argp_fmtstream_ensure (argp_fmtstream_t __fs, size_t __amount);
 extern int __argp_fmtstream_ensure (argp_fmtstream_t __fs, size_t __amount);
-
-#ifdef __OPTIMIZE__
+
+#if defined(__OPTIMIZE__) && !defined(__clang__)
 /* Inline versions of above routines.  */
 
 #if !_LIBC
