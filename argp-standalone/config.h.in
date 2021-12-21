@@ -144,6 +144,20 @@
 /* Define to `unsigned' if <sys/types.h> does not define. */
 #undef size_t
 
+#mesondefine HAVE_CONFIG_H
+#mesondefine HAVE_UNISTD_H
+#mesondefine HAVE_ALLOCA_H
+#mesondefine HAVE_MALLOC_H
+#mesondefine HAVE_LIBINTL_H
+
+#mesondefine HAVE_FLOCKFILE
+#mesondefine HAVE_ASPRINTF
+#mesondefine HAVE_STRDUP
+#mesondefine HAVE_STRCHRNUL
+
+#mesondefine HAVE_DECL_PROGRAM_INVOCATION_NAME
+#mesondefine HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
+
 #if __GNUC__ && HAVE_GCC_ATTRIBUTE
 # define NORETURN __attribute__ ((__noreturn__))
 # define PRINTF_STYLE(f, a) __attribute__ ((__format__ (__printf__, f, a)))

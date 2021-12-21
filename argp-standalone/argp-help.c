@@ -66,7 +66,7 @@ char *alloca ();
 #include "argp.h"
 #include "argp-fmtstream.h"
 #include "argp-namefrob.h"
-
+
 
 #ifndef _LIBC
 # ifndef __strchrnul
@@ -230,7 +230,7 @@ fill_in_uparams (const struct argp_state *state)
 	      }
 	    else if (isdigit (*arg))
 	      {
-		val = atoi (arg);
+		val = atoi ((char*)arg);
 		while (isdigit (*arg))
 		  arg++;
 		SKIPWS (arg);
@@ -238,7 +238,7 @@ fill_in_uparams (const struct argp_state *state)
 
 	    for (un = uparam_names; un->name; un++)
 	      if (strlen (un->name) == var_len
-		  && strncmp (var, un->name, var_len) == 0)
+		  && strncmp ((char*)var, un->name, var_len) == 0)
 		{
 		  if (unspec && !un->is_bool)
 		    __argp_failure (state, 0, 0,

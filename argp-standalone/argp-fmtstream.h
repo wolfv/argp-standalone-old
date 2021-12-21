@@ -32,6 +32,14 @@
 #include <unistd.h>
 #endif
 
+#ifndef PRINTF_STYLE
+#if __GNUC__ >= 2
+#define PRINTF_STYLE(f, a) __attribute__ ((__format__ (__printf__, f, a)))
+#else
+#define PRINTF_STYLE(f, a)
+#endif
+#endif
+
 #ifdef _WIN32
 typedef ptrdiff_t ssize_t;
 #endif
@@ -105,7 +113,7 @@ typedef FILE *argp_fmtstream_t;
 #define __const const
 #endif
 
-
+
 struct argp_fmtstream
 {
   FILE *stream;			/* The stream we're outputting to.  */
@@ -145,11 +153,9 @@ extern void __argp_fmtstream_free (argp_fmtstream_t __fs);
 extern void argp_fmtstream_free (argp_fmtstream_t __fs);
 
 extern ssize_t __argp_fmtstream_printf (argp_fmtstream_t __fs,
-				       __const char *__fmt, ...)
-     PRINTF_STYLE(2,3);
+				       __const char *__fmt, ...) PRINTF_STYLE(2,3);
 extern ssize_t argp_fmtstream_printf (argp_fmtstream_t __fs,
-				      __const char *__fmt, ...)
-     PRINTF_STYLE(2,3);
+				      __const char *__fmt, ...) PRINTF_STYLE(2,3);
 
 extern int __argp_fmtstream_putc (argp_fmtstream_t __fs, int __ch);
 extern int argp_fmtstream_putc (argp_fmtstream_t __fs, int __ch);
