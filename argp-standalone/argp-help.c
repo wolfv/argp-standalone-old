@@ -33,6 +33,8 @@
 # else
 #  ifdef _AIX
  #pragma alloca
+#  elif defined(_WIN32)
+  #define alloca _alloca
 #  else
 #   ifndef alloca /* predefined by HP cc +Olibcalls */
 char *alloca ();
@@ -52,7 +54,7 @@ char *alloca ();
 
 #ifndef _
 /* This is for other GNU distributions with internationalized messages.  */
-# if defined HAVE_LIBINTL_H || defined _LIBC
+# if HAVE_LIBINTL_H
 #  include <libintl.h>
 #  ifdef _LIBC
 #   undef dgettext

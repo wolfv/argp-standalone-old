@@ -33,6 +33,8 @@
 # else
 #  ifdef _AIX
  #pragma alloca
+#  elif defined(_WIN32)
+  #define alloca _alloca
 #  else
 #   ifndef alloca /* predefined by HP cc +Olibcalls */
 char *alloca ();
@@ -52,7 +54,7 @@ char *alloca ();
 #ifndef _
 /* This is for other GNU distributions with internationalized messages.
    When compiling libc, the _ macro is predefined.  */
-# if defined HAVE_LIBINTL_H || defined _LIBC
+# if HAVE_LIBINTL_H
 #  include <libintl.h>
 #  ifdef _LIBC
 #   undef dgettext
@@ -151,7 +153,13 @@ argp_default_parser (int key, char *arg, struct argp_state *state)
       fprintf(state->err_stream, "%s: pid = %ld\n",
 	      state->name, (long) getpid());
       while (_argp_hang-- > 0)
-	__sleep (1);
+      {
+      #ifndef _WIN32
+        __sleep (1);
+      #else
+        Sleep(1000);
+      #endif
+      }
       break;
 
     default:
