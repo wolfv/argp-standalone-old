@@ -592,7 +592,7 @@ __option_is_short (__const struct argp_option *__opt) __THROW
   else
     {
       int __key = __opt->key;
-      return __key > 0 && isprint (__key);
+      return __key > 0 && __key <= 0xFF && isprint (__key);
     }
 }
 

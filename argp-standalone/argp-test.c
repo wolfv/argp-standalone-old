@@ -167,7 +167,7 @@ static void
 popt (int key, char *arg)
 {
   char buf[10];
-  if (isprint (key))
+  if (key > 0 && key <= 0xFF && isprint (key))
     sprintf (buf, "%c", key);
   else
     sprintf (buf, "%d", key);
