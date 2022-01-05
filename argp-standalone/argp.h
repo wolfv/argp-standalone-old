@@ -564,59 +564,6 @@ _argp_short_program_name(const struct argp_state *state) __THROW;
 extern char *
 __argp_short_program_name(const struct argp_state *state) __THROW;
 
-
-#ifdef __USE_EXTERN_INLINES
-
-# if !_LIBC
-#  define __argp_usage argp_usage
-#  define __argp_state_help argp_state_help
-#  define __option_is_short _option_is_short
-#  define __option_is_end _option_is_end
-# endif
-
-# ifndef ARGP_EI
-#  define ARGP_EI extern __inline__
-# endif
-
-ARGP_EI void
-__argp_usage (__const struct argp_state *__state) __THROW;
-ARGP_EI int
-__option_is_short (__const struct argp_option *__opt) __THROW;
-ARGP_EI int
-__option_is_end (__const struct argp_option *__opt) __THROW;
-
-inline void
-__argp_usage (__const struct argp_state *__state) __THROW
-{
-  __argp_state_help (__state, stderr, ARGP_HELP_STD_USAGE);
-}
-
-inline int
-__option_is_short (__const struct argp_option *__opt) __THROW
-{
-  if (__opt->flags & OPTION_DOC)
-    return 0;
-  else
-    {
-      int __key = __opt->key;
-      return __key > 0 && __key <= 0xFF && isprint (__key);
-    }
-}
-
-inline int
-__option_is_end (__const struct argp_option *__opt) __THROW
-{
-  return !__opt->key && !__opt->name && !__opt->doc && !__opt->group;
-}
-
-# if !_LIBC
-#  undef __argp_usage
-#  undef __argp_state_help
-#  undef __option_is_short
-#  undef __option_is_end
-# endif
-#endif /* Use extern inlines.  */
-
 #ifdef  __cplusplus
 }
 #endif
