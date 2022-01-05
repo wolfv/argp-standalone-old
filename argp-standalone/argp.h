@@ -564,7 +564,7 @@ _argp_short_program_name(const struct argp_state *state) __THROW;
 extern char *
 __argp_short_program_name(const struct argp_state *state) __THROW;
 
-
+
 #ifdef __USE_EXTERN_INLINES
 
 # if !_LIBC
@@ -579,12 +579,19 @@ __argp_short_program_name(const struct argp_state *state) __THROW;
 # endif
 
 ARGP_EI void
+__argp_usage (__const struct argp_state *__state) __THROW;
+ARGP_EI int
+__option_is_short (__const struct argp_option *__opt) __THROW;
+ARGP_EI int
+__option_is_end (__const struct argp_option *__opt) __THROW;
+
+inline void
 __argp_usage (__const struct argp_state *__state) __THROW
 {
   __argp_state_help (__state, stderr, ARGP_HELP_STD_USAGE);
 }
 
-ARGP_EI int
+inline int
 __option_is_short (__const struct argp_option *__opt) __THROW
 {
   if (__opt->flags & OPTION_DOC)
@@ -596,7 +603,7 @@ __option_is_short (__const struct argp_option *__opt) __THROW
     }
 }
 
-ARGP_EI int
+inline int
 __option_is_end (__const struct argp_option *__opt) __THROW
 {
   return !__opt->key && !__opt->name && !__opt->doc && !__opt->group;
