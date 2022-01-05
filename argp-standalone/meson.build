@@ -1,6 +1,5 @@
 project('argp-standalone', 'c')
 
-
 argp_source = files([
 	'argp-ba.c',
 	'argp-eexst.c',
