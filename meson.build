@@ -1,17 +1,17 @@
 project('argp-standalone', 'c')
 
 argp_source = files([
-	'argp-ba.c',
-	'argp-eexst.c',
-	'argp-fmtstream.c',
-	'argp-help.c',
-	'argp-parse.c',
-	'argp-pv.c',
-	'argp-pvh.c',
-	# 'argp-test.c'
+	'argp-standalone/argp-ba.c',
+	'argp-standalone/argp-eexst.c',
+	'argp-standalone/argp-fmtstream.c',
+	'argp-standalone/argp-help.c',
+	'argp-standalone/argp-parse.c',
+	'argp-standalone/argp-pv.c',
+	'argp-standalone/argp-pvh.c',
+	#'argp-standalone/argp-test.c'
 ])
 
-install_headers('argp.h')
+install_headers('argp-standalone/argp.h')
 
 conf_data = configuration_data()
 
@@ -42,28 +42,28 @@ if cc.check_header('libintl.h')
 	deps += dependency('intl')
 endif
 
-configure_file(input : 'config.h.in',
+configure_file(input : 'argp-standalone/config.h.in',
                output : 'config.h',
                configuration : conf_data)
 
 add_global_arguments('-DHAVE_CONFIG_H=1', language : 'c')
 
 if not cc.has_function('strchrnul')
-	argp_source += files(['strchrnul.c'])
+	argp_source += files(['argp-standalone/strchrnul.c'])
 endif
 if not cc.has_function('strndup')
-	argp_source += files(['strndup.c'])
+	argp_source += files(['argp-standalone/strndup.c'])
 endif
 if not cc.has_function('strcasecmp')
-	argp_source += files(['strcasecmp.c'])
+	argp_source += files(['argp-standalone/strcasecmp.c'])
 endif
 if not cc.has_function('mempcpy')
-	argp_source += files(['mempcpy.c'])
+	argp_source += files(['argp-standalone/mempcpy.c'])
 endif
 
 library('argp',
 	argp_source,
-	include_directories: '.',
-	dependencies: deps,
+	include_directories : 'argp-standalone',
+	dependencies : deps,
 	install : true
 )
